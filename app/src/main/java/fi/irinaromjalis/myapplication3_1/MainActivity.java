@@ -13,8 +13,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private TextView result;
-    private RadioButton  hex, bin;
     private RadioGroup radioGroup;
+    public  int counterValue, value;
+
 
     Counter count = new Counter(-15, 20, 0, 7);
 
@@ -35,40 +36,49 @@ public class MainActivity extends AppCompatActivity {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int value = count.increment(Integer.parseInt(result.getText().toString()));
-                result.setText(value+ "");
+                counterValue = Integer.parseInt(result.getText().toString());
+
+                value = count.increment(counterValue);
+                String res = Integer.toString(value);
+                result.setText(res);
             }
         });
 
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int value = count.decrement(Integer.parseInt(result.getText().toString()));
-                result.setText(value + "");
+                counterValue = Integer.parseInt(result.getText().toString());
+
+                value = count.decrement(counterValue);
+                String res = Integer.toString(value);
+                result.setText(res);
             }
         });
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int value = count.reset();
 
-                result.setText(value + "");
+                int value = count.reset();
+                String res = Integer.toString(value);
+                result.setText(res);
             }
         });
     }
 
     public void checkButton(View view) {
         boolean checked = ((RadioButton) view).isChecked();
+        counterValue = Integer.parseInt(result.getText().toString());
 
         switch(view.getId()) {
             case R.id.bin:
                 if (checked)
-                    result.setText(Integer.toBinaryString(Integer.parseInt(result.getText().toString())));
+                result.setText(Integer.toBinaryString(counterValue));
                     break;
+
             case R.id.hex:
                 if (checked)
-                    result.setText(Integer.toHexString(Integer.parseInt(result.getText().toString())));
+                    result.setText(Integer.toHexString(counterValue));
                     break;
         }
     }
